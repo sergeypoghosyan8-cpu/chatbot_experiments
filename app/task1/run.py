@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
+from langsmith import traceable
 
 
 def load_system_prompt() -> str:
@@ -27,6 +28,7 @@ def build_agent():
     return chain
 
 
+@traceable
 def ask(chain, user_input: str) -> str:
     result = chain.invoke({"input": user_input})
     return result.content if hasattr(result, "content") else str(result)
